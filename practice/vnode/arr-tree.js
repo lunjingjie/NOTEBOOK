@@ -80,3 +80,13 @@ function transform2TreeFor(arr) {
 }
 
 console.log(JSON.stringify(transform2TreeFor(arr)));
+
+const obj = {
+  a: undefined,
+  b: () => {
+    console.log(1);
+  },
+  c: 1,
+};
+
+console.log(JSON.stringify(obj));
