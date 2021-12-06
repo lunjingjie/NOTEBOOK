@@ -42,11 +42,41 @@ const arr = [{
 ]
 
 // 递归
-transformToTree(arr) {
-  const obj = {};
-  if (arr) {
-    arr.forEach(child => {
-      
-    });
-  }
+function transform2Tree(arr, parentId = 0) {
+  const res = [];
+  arr.forEach(item => {
+    if (item.parentId === parentId) {
+      // 继续递归寻找该项下的子对象
+      const children = transform2Tree(arr, item.id);
+      // 找到的对象
+      if (children.length) {
+        item.children = children;
+      }
+      res.push(item);
+    }
+  });
+  return res;
 }
+
+// 迭代
+function transform2TreeFor(arr) {
+  const map = {};
+  arr.forEach(item => {
+    map[item.id] = item;
+  });
+  const res = [];
+  arr.forEach(item => {
+    const parent = map[item.parentId];
+    if (parent) {
+      if (!parent.children) {
+        parent.children = [];
+      }
+      parent.children.push(item);
+    } else {
+      res.push(item);
+    }
+  });
+  return res;
+}
+
+console.log(JSON.stringify(transform2TreeFor(arr)));
