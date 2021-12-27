@@ -38,4 +38,6 @@ const a = {
 };
 
 const map = new WeakMap();
-console.log(deepClone(a, map));
+const obj = deepClone(a, map);
+a.b.d = ['23'];
+console.log(obj);
