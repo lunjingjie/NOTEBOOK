@@ -38,6 +38,8 @@ class TreeNode {
       this.insertNode(this.root, newNode);
     } else {
       this.root = newNode;
+      const arr = [];
+      arr.reverse();
     }
   }
 
