@@ -47,3 +47,16 @@ webpack通过引用关系逐个打包模块，这些module就形成了一个chun
 是我们最终输出的一个或者多个打包好的文件。
 
 3. Chunk和Bundle的关系是什么？
+
+大多数情况下，一个chunk会生产一个bundle，但是也有例外。
+如果加了sourcemap，一个entry，一个chunk 对应 两个bundle。
+Chunk是过程中代码块，bundle是打包结果输出的代码块。Chunk在构建完成就呈现为bundle。
+
+4. Split Chunk
+
+5. 这段配置会产生几个Chunk
+
+### Plugin和Loader分别是做什么的？怎么工作的？
+1. Loader
+模块转换器，将非js模块转化为webpack能识别的js模块。
+本质上，webpack loader将所有类型的文件，转换为应用程序的**依赖图**：可以直接应用的模块。
