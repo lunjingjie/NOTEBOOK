@@ -6,3 +6,4 @@
 .idea/codeStyles/codeStyleConfig.xml
 .idea/codeStyles/Project.xml
 webpack/webpack-run-demo/node_modules
+webpack/webpack-run-demo/dist
