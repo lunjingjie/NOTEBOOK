@@ -11,7 +11,7 @@
       "skipFiles": [
         "<node_internals>/**"
       ],
-      "program": "${workspaceFolder}\\exercise\\双向绑定\\ex1.js"
+      "program": "${workspaceFolder}\\leecode算法\\4.判断子序列\\index.js"
     }
   ]
 }
