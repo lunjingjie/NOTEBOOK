@@ -1,0 +1,1 @@
+import { extend } from '@mini-vue/shared';
