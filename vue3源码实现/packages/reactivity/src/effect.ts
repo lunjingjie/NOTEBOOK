@@ -116,5 +116,5 @@ export function isTracking() {
  * @param key 
  */
 export function trigger(target, type, key) {
-  
+  console.log('test');
 }
