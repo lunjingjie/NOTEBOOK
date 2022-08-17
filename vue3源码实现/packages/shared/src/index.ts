@@ -3,3 +3,7 @@ export const isObject = (val) => {
 }
 
 export const extend = Object.assign;
+
+export const hasChanged(value, oldValue) {
+  return !Object.is(value, oldValue);
+}

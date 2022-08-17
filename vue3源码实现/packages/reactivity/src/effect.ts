@@ -109,12 +109,49 @@ export function isTracking() {
   return shouldTrack && activeEffect !== undefined;
 }
 
+export function trigger(target, type, key) {
+  // 1. 先收集所有的 dep 放到 deps 里面，
+  // 后面会统一处理
+  let deps: Array<any> = [];
+  // dep
+
+  const depsMap = targetMap.get(target);
+
+  if (!depsMap) return;
+
+  // 暂时只实现了 GET 类型
+  // get 类型只需要取出来就可以
+  const dep = depsMap.get(key);
+
+  // 最后收集到 deps 内
+  deps.push(dep);
+
+  const effects: Array<any> = [];
+  deps.forEach((dep) => {
+    // 这里解构 dep 得到的是 dep 内部存储的 effect
+    effects.push(...dep);
+  });
+  // 这里的目的是只有一个 dep ，这个dep 里面包含所有的 effect
+  // 这里的目前应该是为了 triggerEffects 这个函数的复用
+  triggerEffects(createDep(effects));
+}
+
 /**
  * 执行收集到的effect的run方法
  * @param target
  * @param type 
  * @param key 
  */
-export function trigger(target, type, key) {
-  console.log('test');
+export function triggerEffects(dep) {
+  // 执行收集到的所有的 effect 的 run 方法
+  for (const effect of dep) {
+    if (effect.scheduler) {
+      // scheduler 可以让用户自己选择调用的时机
+      // 这样就可以灵活的控制调用了
+      // 在 runtime-core 中，就是使用了 scheduler 实现了在 next ticker 中调用的逻辑
+      effect.scheduler();
+    } else {
+      effect.run();
+    }
+  }
 }
