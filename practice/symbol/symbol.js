@@ -24,3 +24,9 @@ const obj = {
 for (const item of obj) {
   console.log(item) // 1 2 3 4 5 6 7 8 9 10
 }
+
+var a = {n: 1};
+var b = a;
+a.x = a = {n: 2};
+console.log(a.x);
+console.log(b.x);
