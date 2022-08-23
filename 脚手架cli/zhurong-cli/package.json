@@ -1,0 +1,36 @@
+{
+  "name": "lunjj-vue-cli",
+  "version": "1.0.1",
+  "description": "simple vue cli",
+  "main": "index.js",
+  "bin": {
+    "knt": "./bin/cli.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "files": [
+    "bin",
+    "lib"
+  ],
+  "author": {
+    "name": "lunjingjie",
+    "email": "810581928@qq.com"
+  },
+  "keywords": [
+    "lunjj-vue-cli",
+    "zr",
+    "脚手架"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "chalk": "^4.1.2",
+    "commander": "^9.4.0",
+    "download-git-repo": "^3.0.2",
+    "figlet": "^1.5.2",
+    "fs-extra": "^10.1.0",
+    "inquirer": "^8.0.0",
+    "ora": "^5.4.1"
+  }
+}
