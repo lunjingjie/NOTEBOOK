@@ -1,4 +1,4 @@
-// new、instanceof、throttle、debounce、发布订阅模式、promise、实现call、apply、bind、深拷贝、柯里化
+// new、instanceof、throttle、debounce、发布订阅模式、promise、实现call、apply、bind、深拷贝、柯里化、async/await
 
 /**
  * 实现new操作符
@@ -167,3 +167,118 @@ const fn = currying(function (a, b, c) {
 
 fn(1, 2)(4);
 fn(1)(2)(4);
+
+/**
+ * 实现对象深拷贝
+ * @param {*} obj 对象
+ * @param {*} hash 弱引用Map
+ */
+function deepClone(obj, hash = new WeakMap()) {
+  if (obj === null) {
+    return null;
+  }
+  if (obj instanceof Date) {
+    return new Date(obj);
+  }
+  if (obj instanceof RegExp) {
+    return new RegExp(obj);
+  }
+  if (typeof obj !== 'object') {
+    return obj;
+  }
+  if (hash.has(obj)) {
+    return hash.get(obj);
+  }
+  const resObj = Array.isArray(obj) ? [] : {};
+  hash.set(obj, resObj);
+  Reflect.ownKeys(obj).forEach(key => {
+    resObj[key] = deepClone(obj[key], hash);
+  });
+  return resObj;
+}
+
+class b {
+  text() {}
+};
+
+const a = {
+  a: 1,
+  b: {
+    c: {
+      e: [1, 2, 3],
+    },
+    d: new b().text,
+  }
+};
+const map = new WeakMap();
+const obj = deepClone(a, map);
+a.b.d = ['23'];
+console.log(obj);
+
+
+/**
+ * 实现发布订阅模式
+ */
+class EventEmitter {
+  constructor() {
+    this._events = {};
+  }
+
+  on(eventName, callback) {
+    if (this._events[eventName]) {
+      // 若不是一个新的event注册
+      if (eventName !== 'newListener') {
+        this.emit('newListener', ...args);
+      }
+    }
+    const callbacks = this._events[eventName] || [];
+    callbacks.push(callback);
+    this._events[eventName] = callbacks;
+  }
+
+  emit(eventName, ...args) {
+    this._events[eventName].forEach(cb => cb(...args));
+  }
+
+  once(eventName, callback) {
+    const one = (...args) => {
+      callback(...args);
+      this.off(eventName, callback);
+    }
+    one.initialCallback = callback;
+    this.on(eventName, one);
+  }
+
+  off(eventName, callback) {
+    const newCallbacks = this._events[eventName].filter(fn => fn !== callback && initialCallback !== callback);
+    this._events[eventName] = newCallbacks;
+  }
+}
+
+/**
+ * 实现async、await
+ * @param {*} generatorFunc 
+ * @returns 
+ */
+function asyncToGenerator(generatorFunc) {
+  return function() {
+    const gen = generatorFunc.apply(this, arguments)
+    return new Promise((resolve, reject) => {
+      function step(key, arg) {
+        let generatorResult
+        try {
+          generatorResult = gen[key](arg)
+        } catch (error) {
+          return reject(error)
+        }
+        const { value, done } = generatorResult
+        if (done) {
+          return resolve(value)
+        } else {
+          return Promise.resolve(value).then(val => step('next', val), err => step('throw', err))
+        }
+      }
+      step("next")
+    })
+  }
+}

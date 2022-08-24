@@ -35,7 +35,6 @@ function throttle(fun, delay) {
     let that = this
     let _args = arguments
     let now = +new Date()
-    console.log(now);
     if (last && now < last + delay) {
       clearTimeout(deferTimer)
       deferTimer = setTimeout(function () {

@@ -7,3 +7,5 @@
 .idea/codeStyles/Project.xml
 webpack/webpack-run-demo/node_modules
 webpack/webpack-run-demo/dist
+脚手架cli/my-cli/node_modules
+脚手架cli/zhurong-cli/node_modules

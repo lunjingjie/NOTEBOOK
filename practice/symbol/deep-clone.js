@@ -19,6 +19,7 @@ function deepClone(obj, hash = new WeakMap()) {
   Reflect.ownKeys(obj).forEach(key => {
     resObj[key] = deepClone(obj[key], hash);
   });
+
   return resObj;
 }
 
@@ -31,7 +32,7 @@ const a = {
   a: 1,
   b: {
     c: {
-      e: 3,
+      e: [1, 2, 3],
     },
     d: new b().text,
   }
@@ -40,4 +41,4 @@ const a = {
 const map = new WeakMap();
 const obj = deepClone(a, map);
 a.b.d = ['23'];
-console.log(obj);
+console.log(obj.b.c.e);
