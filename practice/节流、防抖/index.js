@@ -25,6 +25,10 @@ inputb.addEventListener('keyup', function (e) {
 
 
 /* ------------------------------------------节流----------------------------------------------------- */
+function ajax(content) {
+  console.log('ajax request ' + content)
+}
+
 function throttle(fun, delay) {
   let last, deferTimer
   return function (args) {
