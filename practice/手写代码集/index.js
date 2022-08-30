@@ -261,7 +261,7 @@ class EventEmitter {
  * @returns 
  */
 function asyncToGenerator(generatorFunc) {
-  return function() {
+  return function () {
     const gen = generatorFunc.apply(this, arguments)
     return new Promise((resolve, reject) => {
       function step(key, arg) {
@@ -271,7 +271,10 @@ function asyncToGenerator(generatorFunc) {
         } catch (error) {
           return reject(error)
         }
-        const { value, done } = generatorResult
+        const {
+          value,
+          done
+        } = generatorResult
         if (done) {
           return resolve(value)
         } else {
@@ -280,5 +283,22 @@ function asyncToGenerator(generatorFunc) {
       }
       step("next")
     })
+  }
+}
+
+/**
+ * bind实现
+ * @param {*} context 
+ * @param  {...any} args 
+ * @returns 
+ */
+Function.prototype.myBind = function (context, ...args) {
+  const fn = this
+  args = args ? args : []
+  return function newFn(...newFnArgs) {
+    if (this instanceof newFn) {
+      return new fn(...args, ...newFnArgs)
+    }
+    return fn.apply(context, [...args, ...newFnArgs])
   }
 }
