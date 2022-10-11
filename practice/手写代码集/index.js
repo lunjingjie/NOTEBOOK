@@ -11,7 +11,6 @@ function create() {
   const obj = Object.create(Con.prototype);
   // 修改this指向
   const ret = Con.apply(obj, arguments);
-  console.log(arguments);
   return ret instanceof Object ? ret : obj;
 }
 
@@ -77,6 +76,7 @@ function debounce(fn, delay) {
     clearTimeout(fn.id);
     fn.id = setTimeout(() => {
       fn.apply(that, _args);
+      clearTimeout(fn.id);
     }, delay);
   }
 }
@@ -146,6 +146,17 @@ function bar(name, age) {
 
 console.log(bar.apply(obj, ['lunjingjie', 13]));
 
+Function.prototype.myBind = function (context, ...outArgs) {
+  context = context ? Object(context) : window;
+  // 使用Symbol可保证唯一性
+  context.fn = this;
+
+  return function (...innerArgs) { // 返回一个函数
+    const result = context.fn(...outArgs, ...innerArgs) // outArgs和innerArgs都是一个数组，解构后传入函数
+    // delete target[symbolKey] 这里千万不能销毁绑定的函数，否则第二次调用的时候，就会出现问题。
+    return result;
+  } 
+}
 
 /**
  * 实现柯里化函数
@@ -283,22 +294,5 @@ function asyncToGenerator(generatorFunc) {
       }
       step("next")
     })
-  }
-}
-
-/**
- * bind实现
- * @param {*} context 
- * @param  {...any} args 
- * @returns 
- */
-Function.prototype.myBind = function (context, ...args) {
-  const fn = this
-  args = args ? args : []
-  return function newFn(...newFnArgs) {
-    if (this instanceof newFn) {
-      return new fn(...args, ...newFnArgs)
-    }
-    return fn.apply(context, [...args, ...newFnArgs])
   }
 }

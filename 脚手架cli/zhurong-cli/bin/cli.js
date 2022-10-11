@@ -17,7 +17,7 @@ program
 program.version(`v${require('../package.json').version}`).usage('<command> [option]')
 
 program.on('--help', () => {
-  console.log('\r\n' + figlet.textSync('zhurong', {
+  console.log('\r\n' + figlet.textSync('KFC 50', {
     font: 'Ghost',
     horizontalLayout: 'default',
     verticalLayout: 'default',
