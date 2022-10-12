@@ -273,26 +273,46 @@ class EventEmitter {
  */
 function asyncToGenerator(generatorFunc) {
   return function () {
-    const gen = generatorFunc.apply(this, arguments)
+    const gen = generatorFunc.apply(this, arguments);
     return new Promise((resolve, reject) => {
       function step(key, arg) {
-        let generatorResult
+        let generatorResult;
         try {
-          generatorResult = gen[key](arg)
+          generatorResult = gen[key](arg);
         } catch (error) {
-          return reject(error)
+          return reject(error);
         }
-        const {
-          value,
-          done
-        } = generatorResult
+        const {value, done } = generatorResult;
         if (done) {
-          return resolve(value)
+          return resolve(value);
         } else {
-          return Promise.resolve(value).then(val => step('next', val), err => step('throw', err))
+          return Promise.resolve(value).then(val => step('next', val), err => step('throw', err));
         }
       }
-      step("next")
-    })
+      step('next');
+    });
   }
 }
+
+// function asyncToGenerator(generatorFunc) {
+//   return function () {
+//     const gen = generatorFunc.apply(this, arguments);
+//     return new Promise((resolve, reject) => {
+//       function step(key, args) {
+//         let generatorResult;
+//         try {
+//           generatorResult = gen[key](args);
+//         } catch(err) {
+//           return reject(err);
+//         }
+
+//         const { value, done } = generatorResult;
+//         if (done) {
+//           return resolve(value);
+//         }
+//         return Promise.resolve(value).then(val => step('next', val)).catch(err => step('throw', err));
+//       }
+//       step('next');
+//     });
+//   }
+// }
