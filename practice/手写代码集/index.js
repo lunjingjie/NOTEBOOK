@@ -316,3 +316,24 @@ function asyncToGenerator(generatorFunc) {
 //     });
 //   }
 // }
+
+// arr.flat(Infinity)解开无限嵌套的数组
+// 手写flat，reduce实现（扁平化数组）
+const arr = [1, [[2, 3], 4],5]
+const flatten = (arr, deep = 1) => {
+    if (deep <= 0) return arr;
+    return arr.reduce((res, curr) => res.concat(Array.isArray(curr) ? flatten(curr, deep - 1) : curr), [])
+}
+
+// 循环实现
+function flatten(arr) {
+  let result = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (Array.isArray(arr[i])) {
+      result = result.concat(flatten(arr[i]));
+    } else {
+      result.push(arr[i])
+    }
+  }
+  return result;
+}
