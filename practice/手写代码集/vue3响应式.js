@@ -51,13 +51,41 @@ function effect(fn) {
   activeEffect = null;
 }
 
-const person = reactive({
-  name: 'lunjingjie',
-  age: 26,
-});
+function ref(value) {
+  return reactive({
+    value,
+  });
+}
 
-effect(() => {
-  console.log(`${person.name}, ${person.age}`);
-});
+function computed(fn) {
+  const result = ref();
+  effect(() => ref.value = fn());
+  return result;
+}
 
-person.age = 27;
+// 测试响应式
+// const person = reactive({
+//   name: 'lunjingjie',
+//   age: 26,
+// });
+
+// effect(() => {
+//   console.log(`${person.name}, ${person.age}`);
+// });
+
+// person.age = 27;
+
+// 测试ref
+// const refName = ref(5);
+// effect(() => {
+//   console.log(`${refName.value}`);
+// });
+// refName.value = 6;
+
+// 测试computed
+// const number = ref(1);
+// const test = computed(() => {
+//   console.log(`${number.value}` + 1);
+// });
+
+// number.value = 2;
