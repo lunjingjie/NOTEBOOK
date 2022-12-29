@@ -1,5 +1,6 @@
-import { router } from './router';
+import { router, routerList } from './router';
 
 export {
   router,
+  routerList,
 };

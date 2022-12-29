@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { Layout, Menu, theme } from 'antd';
 import { RouterProvider } from 'react-router-dom';
-import { router } from './util/router';
-import { menuList } from './util/menu';
+import { router, routerList } from './util/router';
 
 const { Header, Sider, Content } = Layout;
 
 function App() {
 	const [collapsed, setCollapsed] = useState(false);
-	const menuItems = menuList.map((item) => ({
+	const menuItems = routerList.map((item) => ({
 		key: item.path,
 		label: item.name
 	}));
