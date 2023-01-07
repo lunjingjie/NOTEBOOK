@@ -2,6 +2,7 @@ import { createHashRouter } from 'react-router-dom';
 import Jsx from '../../pages/Jsx';
 import Component from '../../pages/Component';
 import State from '../../pages/State';
+import Props from '../../pages/Props';
 
 export const routerList = [
 	{
@@ -18,6 +19,11 @@ export const routerList = [
 		path: '/state',
 		element: <State />,
     name: 'state学习',
+	},
+  {
+		path: '/props',
+		element: <Props />,
+    name: 'props学习',
 	},
 ];
 
