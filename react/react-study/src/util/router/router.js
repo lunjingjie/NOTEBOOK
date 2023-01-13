@@ -3,6 +3,7 @@ import Jsx from '../../pages/Jsx';
 import Component from '../../pages/Component';
 import State from '../../pages/State';
 import Props from '../../pages/Props';
+import LifeCycle from '../../pages/LifeCycle';
 
 export const routerList = [
 	{
@@ -24,6 +25,11 @@ export const routerList = [
 		path: '/props',
 		element: <Props />,
     name: 'props学习',
+	},
+  {
+		path: '/lifeCycle',
+		element: <LifeCycle />,
+    name: 'lifeCycle学习',
 	},
 ];
 
