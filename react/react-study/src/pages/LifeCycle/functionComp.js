@@ -1,7 +1,7 @@
 import { Button } from 'antd';
 import React, { useEffect, useState } from 'react';
 
-function FunctionLifeCycle(props) {
+const FunctionLifeCycle = (props) => {
 	const [num, setNum] = useState(0);
 	const { outputMsg } = props;
 
@@ -32,14 +32,14 @@ function FunctionLifeCycle(props) {
 		</div>
 	);
 }
-
+const message = [];
 export default React.memo(() => {
 	const [number, setNumber] = useState(0);
 	const [isRender, setRender] = useState(true);
-	const [message, setMessage] = useState([]);
 
-	const outputMsg = (msg) => {
-    setMessage([...message, msg]);
+	const outputMsg = (msg) => { 
+    console.log(msg);
+    message.push(msg);
 	};
 
 	return (
