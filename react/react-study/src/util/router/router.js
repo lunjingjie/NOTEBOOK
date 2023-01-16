@@ -4,32 +4,38 @@ import Component from '../../pages/Component';
 import State from '../../pages/State';
 import Props from '../../pages/Props';
 import LifeCycle from '../../pages/LifeCycle';
+import Ref from '../../pages/Ref';
 
 export const routerList = [
 	{
 		path: '/jsx',
 		element: <Jsx />,
-    name: 'JSX学习',
+    name: 'JSX',
 	},
   {
 		path: '/component',
 		element: <Component />,
-    name: 'component学习',
+    name: 'component',
 	},
   {
 		path: '/state',
 		element: <State />,
-    name: 'state学习',
+    name: 'state',
 	},
   {
 		path: '/props',
 		element: <Props />,
-    name: 'props学习',
+    name: 'props',
 	},
   {
 		path: '/lifeCycle',
 		element: <LifeCycle />,
-    name: 'lifeCycle学习',
+    name: 'lifeCycle',
+	},
+  {
+		path: '/ref',
+		element: <Ref />,
+    name: 'Ref',
 	},
 ];
 
