@@ -5,6 +5,7 @@ import State from '../../pages/State';
 import Props from '../../pages/Props';
 import LifeCycle from '../../pages/LifeCycle';
 import Ref from '../../pages/Ref';
+import Context from '../../pages/Context';
 
 export const routerList = [
 	{
@@ -36,6 +37,11 @@ export const routerList = [
 		path: '/ref',
 		element: <Ref />,
     name: 'Ref',
+	},
+  {
+		path: '/context',
+		element: <Context />,
+    name: 'Context',
 	},
 ];
 
