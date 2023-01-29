@@ -53,12 +53,25 @@ function Box(props) {
  */
 class App extends React.PureComponent {
 	static contextType = ThemeContext;
+
+  state = {
+    radioValue: 'light',
+  }
+
+  onChange = (e) => {
+    const { setTheme } = this.context;
+    this.setState({
+      radioValue: e.target.value,
+    });
+    setTheme(theme[e.target.value]);
+  }
+
 	render() {
-		const { border, setTheme, color, background } = this.context;
+		const { border, color, background } = this.context;
 		return (
 			<div style={{ border, color }}>
 				<span>选择主题：</span>
-				<Radio.Group onChange={(e) => setTheme(theme[e.target.value])} value="light">
+				<Radio.Group onChange={this.onChange} value={this.state.radioValue}>
 					<Radio value="light">浅色</Radio>
 					<Radio value="dark">深色</Radio>
 				</Radio.Group>
