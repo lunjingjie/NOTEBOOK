@@ -12,3 +12,16 @@ webpack/webpack-run-demo/dist
 webpack/webpack(juejin)/node_modules
 webpack/webpack(juejin)/package-lock.json
 webpack/webpack-run-demo(bilibili)/node_modules
+react/react-study/config/env.js
+react/react-study/config/getHttpsConfig.js
+react/react-study/config/modules.js
+react/react-study/config/paths.js
+react/react-study/config/webpack.config.js
+react/react-study/config/webpackDevServer.config.js
+react/react-study/config/jest/babelTransform.js
+react/react-study/config/jest/cssTransform.js
+react/react-study/config/jest/fileTransform.js
+react/react-study/config/webpack/persistentCache/createEnvironmentHash.js
+react/react-study/scripts/build.js
+react/react-study/scripts/start.js
+react/react-study/scripts/test.js
