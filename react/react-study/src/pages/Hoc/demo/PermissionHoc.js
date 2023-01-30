@@ -1,7 +1,7 @@
 import { Permission } from './index';
-function NoPermission() {
-  return <div>没有权限</div>
-}
+// function NoPermission() {
+//   return <div>没有权限</div>
+// }
 
 export function PermissionHoc(authorization) {
   return function(Component) {
@@ -9,7 +9,7 @@ export function PermissionHoc(authorization) {
       const matchPermission = (value, list) => list.indexOf(value);
       return <Permission.Consumer>
         {
-          (permissionList) => matchPermission(authorization, permissionList) > 0 ? <Component { ...props } /> : <NoPermission></NoPermission>
+          (permissionList) => matchPermission(authorization, permissionList) > -1 ? <Component { ...props } /> : null
         }
       </Permission.Consumer>
     }

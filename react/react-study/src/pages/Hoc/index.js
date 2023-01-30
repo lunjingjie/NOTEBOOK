@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card } from 'antd';
 import ClickEventHoc from './ClickEventHoc';
+import PermissControl from './demo';
 
 const Index = () => {
 	return (
@@ -11,7 +12,9 @@ const Index = () => {
 					<button>组件外部点击</button>
 				</div>
 			</Card>
-			<Card type="inner" title="函数组件" style={{ marginTop: 10 }}></Card>
+			<Card type="inner" title="权限控制demo" style={{ marginTop: 10 }}>
+        <PermissControl></PermissControl>
+      </Card>
 		</>
 	);
 };
