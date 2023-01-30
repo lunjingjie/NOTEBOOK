@@ -6,6 +6,7 @@ import Props from '../../pages/Props';
 import LifeCycle from '../../pages/LifeCycle';
 import Ref from '../../pages/Ref';
 import Context from '../../pages/Context';
+import Hoc from '../../pages/Hoc';
 
 export const routerList = [
 	{
@@ -42,6 +43,11 @@ export const routerList = [
 		path: '/context',
 		element: <Context />,
     name: 'Context',
+	},
+  {
+		path: '/hoc',
+		element: <Hoc />,
+    name: 'Hoc',
 	},
 ];
 
