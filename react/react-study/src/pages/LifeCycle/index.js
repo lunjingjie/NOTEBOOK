@@ -1,7 +1,6 @@
 import React from 'react';
 import { Card } from 'antd';
 import FunctionComp from './functionComp';
-import ClassComp from './classComp';
 
 const Index = () => {
 	return (

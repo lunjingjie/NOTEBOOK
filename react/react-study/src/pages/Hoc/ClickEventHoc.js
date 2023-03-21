@@ -20,10 +20,12 @@ function ClickHoc(Component) {
 }
 
 function Index() {
-  return <div>
-  <p>hello</p>
-  <button>组件内部点击</button>
-</div>
+	return (
+		<div>
+			<p>hello</p>
+			<button>组件内部点击</button>
+		</div>
+	);
 }
 
 export default ClickHoc(Index);

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { Layout, Menu, theme } from 'antd';
 import { RouterProvider } from 'react-router-dom';
@@ -19,6 +19,17 @@ function App() {
 	const clickMenu = (e) => {
 		window.location.hash = e.key;
 	};
+
+  useEffect(() => {
+    // const host = document.documentElement;
+    // if (host.requestFullscreen) {
+    //   host.requestFullscreen();
+    // } else if (host.mozRequestFullScreen) {
+    //   host.mozRequestFullScreen();
+    // } else if (host.webkitRequestFullScreen) {
+    //   host.webkitRequestFullScreen();
+    // }
+  }, []);
 
 	return (
 		<Layout style={{ height: '100vh' }}>
