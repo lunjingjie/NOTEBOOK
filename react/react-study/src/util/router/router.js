@@ -9,7 +9,7 @@ import Context from '../../pages/Context';
 import Hoc from '../../pages/Hoc';
 import RenderControl from '../../pages/RenderControl';
 import FileTest from '../../pages/FileTest';
-import LowCode from '../../pages/LowCode';
+import LowCode from '../../pages/LowCode/index.tsx';
 import WebRtc from '../../pages/WebRtc';
 
 export const routerList = [

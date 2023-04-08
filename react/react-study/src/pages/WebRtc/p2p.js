@@ -13,10 +13,10 @@ let localStream = null;
 let remoteStream = null;
 
 export default React.memo(() => {
-	const offerSdp = useRef('');
-	const offerSdp2 = useRef('');
-	const answerSdp = useRef('');
-	const answerSdp2 = useRef('');
+	const [offerSdp, setOfferSdp] = useState('');
+	const [offerSdp2, setOfferSdp2] = useState('');
+	const [answerSdp, setAnswerSdp] = useState('');
+	const [answerSdp2, setAnswerSdp2] = useState('');
 
 	const localVideo = useRef();
 	const remoteVideo = useRef();
@@ -30,7 +30,6 @@ export default React.memo(() => {
 			// 添加本地视频流
 			localVideo.current.srcObject = localStream;
 			// 添加本地流到pc
-			console.log(localStream);
 			localStream.getTracks().forEach((track) => {
 				pc.addTrack(track, localStream);
 			});
@@ -49,17 +48,17 @@ export default React.memo(() => {
 		// 监听 RTCPeerConnection 的 onicecandidate 事件，当 ICE 服务器返回一个新的候选地址时，就会触发该事件
 		pc.onicecandidate = async (event) => {
 			if (event.candidate) {
-				offerSdp.current = JSON.stringify(pc.localDescription);
+        setOfferSdp(JSON.stringify(pc.localDescription));
 			}
 		};
 	};
 
 	const createAnswer = async () => {
 		// 解析字符串
-		const offer = JSON.parse(offerSdp2.current);
+		const offer = JSON.parse(offerSdp2);
 		pc.onicecandidate = (event) => {
 			if (event.candidate) {
-				answerSdp.current = JSON.stringify(pc.localDescription);
+        setAnswerSdp(JSON.stringify(pc.localDescription));
 			}
 		};
 		await pc.setRemoteDescription(offer);
@@ -68,8 +67,9 @@ export default React.memo(() => {
 	};
 
 	const addAnswer = async () => {
-		const answer = JSON.parse(answerSdp2.current);
+		const answer = JSON.parse(answerSdp2);
 		if (!pc.currentRemoteDescription) {
+      console.log(answer);
 			pc.setRemoteDescription(answer);
 		}
 	};
@@ -102,7 +102,7 @@ export default React.memo(() => {
 						</p>
 						<p>SDP offer:</p>
 						<Input value={offerSdp}></Input>
-						<Button type="success" onClick={(offerSdp) => copyToClipboard(offerSdp)}>
+						<Button type="success" onClick={() => copyToClipboard(offerSdp)}>
 							点击复制
 						</Button>
 					</div>
@@ -113,7 +113,7 @@ export default React.memo(() => {
 							"来生成SDP答案，然后将 SDP Answer 复制给用户1。
 						</p>
 
-						<Input value={offerSdp2}></Input>
+						<Input value={offerSdp2} onChange={(e) => setOfferSdp2(e.target.value)}></Input>
 						<Button type="success" onClick={createAnswer}>
 							创建 Answer
 						</Button>
@@ -123,7 +123,7 @@ export default React.memo(() => {
 						<Button
 							type="success"
 							size="default"
-							onClick={(answerSdp) => copyToClipboard(answerSdp)}
+							onClick={() => copyToClipboard(answerSdp)}
 						>
 							点击复制
 						</Button>
@@ -134,7 +134,7 @@ export default React.memo(() => {
 						<p>将用户2 创建的 Answer 粘贴到下方，然后点击 Add Answer。</p>
 
 						<p>SDP Answer:</p>
-						<Input value={answerSdp2}></Input>
+						<Input value={answerSdp2} onChange={(e) => setAnswerSdp2(e.target.value)}></Input>
 						<Button type="success" size="default" onClick={addAnswer}>
 							Add Answer
 						</Button>
@@ -144,3 +144,4 @@ export default React.memo(() => {
 		</>
 	);
 });
+
