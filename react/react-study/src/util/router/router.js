@@ -7,6 +7,10 @@ import LifeCycle from '../../pages/LifeCycle';
 import Ref from '../../pages/Ref';
 import Context from '../../pages/Context';
 import Hoc from '../../pages/Hoc';
+import RenderControl from '../../pages/RenderControl';
+import FileTest from '../../pages/FileTest';
+import LowCode from '../../pages/LowCode/index.tsx';
+import WebRtc from '../../pages/WebRtc';
 
 export const routerList = [
 	{
@@ -48,6 +52,26 @@ export const routerList = [
 		path: '/hoc',
 		element: <Hoc />,
     name: 'Hoc',
+	},
+  {
+		path: '/renderControl',
+		element: <RenderControl />,
+    name: 'RenderControl',
+	},
+  {
+		path: '/fileTest',
+		element: <FileTest />,
+    name: 'FileTest',
+	},
+  {
+		path: '/lowCode',
+		element: <LowCode />,
+    name: 'LowCode',
+	},
+  {
+		path: '/webRtc',
+		element: <WebRtc />,
+    name: 'WebRtc',
 	},
 ];
 

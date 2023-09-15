@@ -6,7 +6,7 @@ import { router, routerList } from './util/router';
 
 const { Header, Sider, Content } = Layout;
 
-function App() {
+const App: React.FC = () => {
 	const [collapsed, setCollapsed] = useState(false);
 	const menuItems = routerList.map((item) => ({
 		key: item.path,
@@ -16,7 +16,7 @@ function App() {
 		token: { colorBgContainer }
 	} = theme.useToken();
 
-	const clickMenu = (e) => {
+	const clickMenu = (e: any) => {
 		window.location.hash = e.key;
 	};
 
@@ -47,7 +47,9 @@ function App() {
 				<Header
 					style={{
 						padding: 0,
-						background: colorBgContainer
+						background: colorBgContainer,
+            height: 48,
+            lineHeight: '48px'
 					}}
 				>
 					{React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
@@ -61,7 +63,7 @@ function App() {
 				</Header>
 				<Content
 					style={{
-						margin: '20px 18px',
+						margin: 3,
 						minHeight: 280,
 					}}
 				>
