@@ -2,6 +2,8 @@ import { Antd5Editor } from 'pages/LowCode/react-shells/ant5';
 import { memo, useMemo, useState } from 'react';
 import { pages } from './data';
 import { toolsLocales } from './locales';
+import { Logo } from './widgets/Logo';
+import { Space } from 'antd';
 
 // 枚举左侧nav类型
 export enum LeftNavType {
@@ -27,7 +29,10 @@ export const Antd5Example = memo(() => {
 			previewUrl="preview-render"
       themeMode='dark'
       navPanel={<></>}
-      topBar={<></>}
+      topBar={<>
+        <Logo />
+        <Space />
+      </>}
       locales={toolsLocales}
       leftNav={<></>}
 		></Antd5Editor>

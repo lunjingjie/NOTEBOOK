@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import { ILocales } from '../../core/interfaces/loacales';
 import { INodeSchema } from '../../core/interfaces/document';
+import { TopBar } from '../../examples/ant5/layouts/TopBar';
 
 // 定义props
 export type Antd5EditorProps = {
@@ -16,5 +17,14 @@ export type Antd5EditorProps = {
 };
 
 export const Antd5Editor = memo((props: Antd5EditorProps) => {
-	return <div>Antd5Editor</div>;
+  const { topBar } = props;
+	return (
+    <div>
+      <TopBar>
+        { topBar || <>
+          <div>topBar</div>
+        </> }
+      </TopBar>
+    </div>
+  );
 });
