@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
+import { MenuFoldOutlined, MenuUnfoldOutlined, MailOutlined } from '@ant-design/icons';
 import { Layout, Menu, theme } from 'antd';
 import { RouterProvider } from 'react-router-dom';
 import { router, routerList } from './util/router';
+import './App.scss';
 
 const { Header, Sider, Content } = Layout;
 
@@ -10,7 +11,8 @@ const App: React.FC = () => {
 	const [collapsed, setCollapsed] = useState(false);
 	const menuItems = routerList.map((item) => ({
 		key: item.path,
-		label: item.name
+		label: item.name,
+    icon: <MailOutlined />
 	}));
 	const {
 		token: { colorBgContainer }
@@ -33,10 +35,10 @@ const App: React.FC = () => {
 
 	return (
 		<Layout style={{ height: '100vh' }}>
-			<Sider trigger={null} collapsible collapsed={collapsed} theme="light">
+			<Sider trigger={null} collapsible collapsed={collapsed} theme="dark">
 				<div className="logo" />
 				<Menu
-					theme="light"
+					theme="dark"
 					mode="inline"
 					defaultSelectedKeys={['/jsx']}
 					items={menuItems}
@@ -66,6 +68,7 @@ const App: React.FC = () => {
 						margin: 3,
 						minHeight: 280,
 					}}
+          className='layout-content'
 				>
 					<RouterProvider router={router}></RouterProvider>
 				</Content>
