@@ -1,0 +1,37 @@
+/* 
+按照UI要求修改的样式写在此文件，以通用组件为单位修改
+类名以“ui-”开头命名
+*/
+.ui-btn {
+  background-color: #eff3ff;
+  color: #3673ea;
+  border: 0px;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.system_ui_card {
+  background: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 3px #e3e5e8 !important;
+  border: 1px solid #e3e5e8;
+}
+
+.system_ui_btn {
+  width: 72px;
+  background: #eff3ff;
+  height: 32px;
+  padding: 5px;
+  text-align: center;
+  border-radius: 4px;
+  color: #3673ea;
+  font-weight: bold;
+  cursor: pointer;
+  letter-spacing: 2px;
+}
+
+.system_ui_del_btn {
+  background: #fff1ef !important;
+  color: #ea4b36 !important;
+}

@@ -1,0 +1,29 @@
+{
+  "name": "@monitor-sdk/browser",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/browser.umd.js",
+  "module": "esm/index.js",
+  "types": "esm/index.d.ts",
+  "files": [
+    "dist",
+    "esm"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "dev": "rollup --config rollup.config.dev.js -w",
+    "build": "run-p build:bundle build:esm",
+    "build:bundle": "rimraf dist && rollup --config",
+    "build:esm": "rimraf esm && tsc -p tsconfig.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@monitor-sdk/core": "workspace:^1.0.0",
+    "@monitor-sdk/types": "workspace:^1.0.0",
+    "@monitor-sdk/utils": "workspace:^1.0.0"
+  }
+}

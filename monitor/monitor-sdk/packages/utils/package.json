@@ -1,0 +1,32 @@
+{
+  "name": "@monitor-sdk/utils",
+  "version": "1.0.0",
+  "description": "@monitor-sdk/utils",
+  "license": "MIT",
+  "author": "LUNJINGJIE",
+  "main": "dist/utils.umd.js",
+  "module": "esm/index.js",
+  "types": "esm/index.d.ts",
+  "files": [
+    "dist",
+    "esm"
+  ],
+  "homepage": "",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "bugs": {},
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "dev": "rimraf dist && rollup --config rollup.config.dev.js -w",
+    "build": "run-p build:bundle build:esm",
+    "build:bundle": "rimraf dist && rollup --config",
+    "build:esm": "rimraf esm && tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@monitor-sdk/types": "workspace:^1.0.0"
+  }
+}
