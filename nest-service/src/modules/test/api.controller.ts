@@ -1,9 +1,9 @@
 import { Controller, Get } from '@nestjs/common';
 
-@Controller('api')
+@Controller('/')
 export class ApiController {
-  @Get('hello')
-  async getHello() {
+  @Get('/hello')
+  getHello(): string {
     return 'Hello World!';
   }
 }
