@@ -5,7 +5,7 @@ export const routerList = [
 	{
 		path: '/basicManage',
 		element: <BasicManage />,
-    name: '管理',
+    name: '信息管理',
 	},
 ];
 
