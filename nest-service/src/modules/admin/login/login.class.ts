@@ -1,3 +1,4 @@
+// 后端返回给前端的数据
 import { SysMenu } from "src/entities/SysMenu";
 
 /**

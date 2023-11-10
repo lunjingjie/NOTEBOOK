@@ -5,6 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { LOGGER_MODULE_OPTIONS } from './shared/logger/logger.constants';
 import { ApiModule } from './modules/test/api.module';
 import { SystemModule } from './modules/admin/system/system.module';
+import { SharedModule } from './shared/shared.module';
+import { AdminModule } from './modules/admin/admin.module';
 
 // 声明module加载配置文件信息、日志、数据库等
 @Module({
@@ -33,7 +35,8 @@ import { SystemModule } from './modules/admin/system/system.module';
 			// inject: [ConfigService, LOGGER_MODULE_OPTIONS],
 		}),
 		ApiModule,
-		SystemModule
+    SharedModule,
+    AdminModule,
 	]
 })
 export class AppModule {}
