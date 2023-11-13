@@ -5,12 +5,15 @@ import * as svgCaptcha from 'svg-captcha';
 import { isEmpty } from 'lodash';
 import { UtilService } from 'src/shared/services/util.service';
 import { RedisService } from 'src/shared/services/redis.service';
+import { SysUserService } from '../system/user/user.service';
+import { ApiException } from 'src/exceptions/api.exception';
 
 @Injectable()
 export class LoginService {
   constructor(
     private util: UtilService,
-    private redisService: RedisService
+    private redisService: RedisService,
+    private userService: SysUserService,
   ) {}
 
   /**
@@ -30,7 +33,7 @@ export class LoginService {
     });
 
     const result = {
-      img:  `data:image/svg+xml;base64,${Buffer.from(svg.data).toString(
+      img: `data:image/svg+xml;base64,${Buffer.from(svg.data).toString(
         'base64',
       )}`,
       id: this.util.generateUUID(),
@@ -51,5 +54,23 @@ export class LoginService {
       throw new Error('验证码错误');
     }
     await this.redisService.getRedis().del(`admin:captcha:img:${id}`);
+  }
+
+  /**
+   * 获取登录的jwt token
+   * @param username 用户名
+   * @param password 密码
+   * @param ip 
+   * @param ua 
+   */
+  async getLoginSign(username: string, password: string, ip: string, ua: string): Promise<string> {
+    const user = await this.userService.findUserByUserName(username);
+    if (isEmpty(user)) {
+      throw new ApiException(10003);
+    }
+    // TODO 获取权限
+
+    const redis = await this.redisService.getRedis();
+    const pv = Number(await redis.get(`admin:passwordVersion:${user.id}`)) || 1);
   }
 }
