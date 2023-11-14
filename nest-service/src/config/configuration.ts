@@ -38,7 +38,10 @@ export const getConfiguration = () => {
       title: process.env.SWAGGER_TITLE,
       desc: process.env.SWAGGER_DESC,
       version: process.env.SWAGGER_VERSION,
-    }
+    },
+    jwt: {
+      secret: process.env.JWT_SECRET || '123456',
+    },
 	};
 };
 

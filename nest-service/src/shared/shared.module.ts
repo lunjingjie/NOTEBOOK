@@ -5,6 +5,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { RedisModule } from './redis/redis.module';
 import { ConfigurationKeyPaths } from 'src/config/configuration';
 import { HttpModule } from '@nestjs/axios';
+import { JwtModule } from '@nestjs/jwt';
 
 const provides = [UtilService, RedisService];
 
@@ -17,6 +18,14 @@ const provides = [UtilService, RedisService];
     }),
     // redis cache
     CacheModule.register(),
+    // jwt
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService<ConfigurationKeyPaths>) => ({
+        secret: configService.get<string>('jwt.secret'),
+      }),
+      inject: [ConfigService],
+    }),
     // 注册redis
     RedisModule.registerAsync({
       imports: [ConfigModule],
@@ -30,6 +39,6 @@ const provides = [UtilService, RedisService];
     }),
   ],
 	providers: [...provides],
-	exports: [HttpModule, CacheModule, ...provides]
+	exports: [HttpModule, CacheModule, JwtModule, ...provides]
 })
 export class SharedModule {}

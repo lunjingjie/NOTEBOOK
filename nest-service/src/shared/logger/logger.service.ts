@@ -6,6 +6,7 @@ import {
   LoggerService as NestLoggerService,
 } from '@nestjs/common';
 import { clc, yellow } from '@nestjs/common/utils/cli-colors.util';
+import * as winston from 'winston';
 import { createLogger, Logger as WinstonLogger, format } from 'winston';
 import WinstonDailyRotateFile from 'winston-daily-rotate-file';
 import { isDev } from 'src/config/env';
@@ -96,11 +97,11 @@ export class LoggerService implements NestLoggerService {
         maxFiles: this.options.maxFiles,
       };
     // 多路日志
-    const webTransport = new WinstonDailyRotateFile(
+    const webTransport = new winston.transports.DailyRotateFile(
       Object.assign(transportOptions, { filename: this.options.appLogName }),
     );
     // 所有error级别都记录在该文件下
-    const errorTransport = new WinstonDailyRotateFile(
+    const errorTransport = new winston.transports.DailyRotateFile(
       Object.assign(transportOptions, {
         filename: this.options.errorLogName,
         level: 'error',

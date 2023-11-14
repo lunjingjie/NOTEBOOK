@@ -14,6 +14,7 @@ export class ImageCaptcha {
 }
 
 export class LoginToken {
+  @ApiProperty({ description: '用户凭证' })
   token: string;
 }
 
