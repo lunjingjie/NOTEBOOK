@@ -53,7 +53,7 @@ export class LoginService {
 	async checkImageCaptcha(id: string, code: string): Promise<void> {
 		const imgText = await this.redisService.getRedis().get(`admin:captcha:img:${id}`);
 		if (isEmpty(imgText) || code.toLowerCase() !== imgText.toLowerCase()) {
-			throw new Error('验证码错误');
+			throw new ApiException(10002);
 		}
 		await this.redisService.getRedis().del(`admin:captcha:img:${id}`);
 	}
