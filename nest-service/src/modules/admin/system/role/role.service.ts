@@ -1,4 +1,4 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
 import { SysRole } from 'src/entities/SysRole';
 import { EntityManager, In, Like, Not, Repository } from 'typeorm';
@@ -6,11 +6,12 @@ import { ROOT_ROLE_ID } from '../../admin.constants';
 import { CreateRoleId, RoleInfo } from './role.class';
 import { SysRoleMenu } from 'src/entities/SysRoleMenu';
 import { SysRoleDepartment } from 'src/entities/SysRoleDepartment';
-import { difference, includes, isEmpty } from 'lodash';
+import { difference, includes, isEmpty, isNull, isUndefined } from 'lodash';
 import { CreateRoleDto, PageSearchDto, UpdateRoleDto } from './role.dto';
 import { SysUserRole } from 'src/entities/SysUserRole';
-import { SysUser } from 'src/entities/SysUser';
+import { PageOptionsDto } from 'src/common/dto/page.dto';
 
+@Injectable()
 export class SysRoleService {
 	constructor(
 		@InjectRepository(SysRole) private roleRepository: Repository<SysRole>,
@@ -201,14 +202,19 @@ export class SysRoleService {
 	 * @param param
 	 * @returns
 	 */
-	async page(param: PageSearchDto): Promise<[SysRole[], number]> {
-		const { name, label, remark, size, page } = param;
+	async page(param: PageSearchDto, pagination: PageOptionsDto): Promise<[SysRole[], number]> {
+    const { size, page } = pagination;
+    const condition = {};
+    Object.keys(param).forEach((key) => {
+      if (param[key]) {
+        condition[key] = Like(`%${param[key]}%`);
+      }
+    });
+    console.log(condition);
 		const result = await this.roleRepository.findAndCount({
 			where: {
 				id: Not(this.rootRoleId),
-				name: Like(`%${name}%`),
-				label: Like(`%${label}%`),
-				remark: Like(`%${remark}%`)
+				...condition,
 			},
 			order: {
 				id: 'ASC'
@@ -237,11 +243,11 @@ export class SysRoleService {
 		return userRoleRows.map((row) => row.roleId);
 	}
 
-  /**
-   * 根据角色id集合统计用户数
-   * @param ids 
-   * @returns 
-   */
+	/**
+	 * 根据角色id集合统计用户数
+	 * @param ids
+	 * @returns
+	 */
 	async countUserIdByRole(ids: number[]): Promise<number | never> {
 		if (includes(ids, this.rootRoleId)) {
 			throw new Error('Not Support Delete Root');

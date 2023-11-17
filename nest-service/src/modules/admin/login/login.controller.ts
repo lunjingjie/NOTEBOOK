@@ -5,6 +5,7 @@ import { ImageCaptcha, LoginToken } from './login.class';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { FastifyRequest } from 'fastify';
 import { UtilService } from 'src/shared/services/util.service';
+import { Authorize } from '../core/decorators/authorize.decorator';
 
 @ApiTags('登录功能')
 @Controller()
@@ -19,6 +20,7 @@ export class LoginController {
 	})
 	@ApiOkResponse({ type: ImageCaptcha })
 	@Get('captcha/img')
+  @Authorize()
 	async captchaByImg(@Query() dto: ImageCaptchaDto): Promise<ImageCaptcha> {
 		return this.loginService.createImageCaptcha(dto);
 	}
@@ -35,6 +37,7 @@ export class LoginController {
 	})
 	@ApiOkResponse({ type: LoginToken })
   @Post('login')
+  @Authorize()
 	async login(
 		@Body() dto: LoginInfoDto,
 		@Req() req: FastifyRequest,

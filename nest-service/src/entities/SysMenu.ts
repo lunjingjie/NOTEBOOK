@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity("sys_menu", { schema: "nest_db" })
 export class SysMenu {
@@ -8,7 +8,7 @@ export class SysMenu {
   })
   createdAt: Date;
 
-  @Column("datetime", {
+  @UpdateDateColumn({
     name: "updated_at",
     default: () => "'CURRENT_TIMESTAMP(6)'",
   })

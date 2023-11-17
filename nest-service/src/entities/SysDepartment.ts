@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity("sys_department", { schema: "nest_db" })
 export class SysDepartment {
@@ -8,7 +8,7 @@ export class SysDepartment {
   })
   createdAt: Date;
 
-  @Column("datetime", {
+  @UpdateDateColumn({
     name: "updated_at",
     default: () => "'CURRENT_TIMESTAMP(6)'",
   })

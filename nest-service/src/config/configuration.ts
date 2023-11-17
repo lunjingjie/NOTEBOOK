@@ -1,6 +1,7 @@
 import { MysqlConnectionOptions } from 'typeorm/driver/mysql/MysqlConnectionOptions';
 export const getConfiguration = () => {
 	return {
+    rootRoleId: parseInt(process.env.ROOT_ROLE_ID || '1'),
 		database: {
 			type: 'mysql',
 			host: process.env.MYSQL_HOST,

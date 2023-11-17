@@ -98,4 +98,20 @@ export class LoginService {
     // await this.logService.saveLoginLog(user.id, ip, ua);
     return jwtSign;
 	}
+
+  clearLoginStatus() {}
+
+  getPermMenu() {}
+
+  async getRedisPasswordVersionById(id: number): Promise<string> {
+    return this.redisService.getRedis().get(`admin:passwordVersion:${id}`);
+  }
+
+  async getRedisTokenById(id: number): Promise<string> {
+    return this.redisService.getRedis().get(`admin:token:${id}`);
+  }
+
+  async getRedisPermsById(id: number): Promise<string> {
+    return this.redisService.getRedis().get(`admin:perms:${id}`);
+  }
 }

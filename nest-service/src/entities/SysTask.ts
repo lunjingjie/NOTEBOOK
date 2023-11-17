@@ -1,4 +1,4 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Index("IDX_ef8e5ab5ef2fe0ddb1428439ef", ["name"], { unique: true })
 @Entity("sys_task", { schema: "nest_db" })
@@ -9,7 +9,7 @@ export class SysTask {
   })
   createdAt: Date;
 
-  @Column("datetime", {
+  @UpdateDateColumn({
     name: "updated_at",
     default: () => "'CURRENT_TIMESTAMP(6)'",
   })
