@@ -1,3 +1,4 @@
+import { ApiProperty } from "@nestjs/swagger";
 import { Column, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity("sys_menu", { schema: "nest_db" })
@@ -14,55 +15,60 @@ export class SysMenu {
   })
   updatedAt: Date;
 
-  @PrimaryGeneratedColumn({ type: "int", name: "id" })
+  @PrimaryGeneratedColumn()
+  @ApiProperty()
   id: number;
 
-  @Column("int", { name: "parent_id", nullable: true })
-  parentId: number | null;
+  @Column({ name: 'parent_id', nullable: true })
+  @ApiProperty()
+  parentId: number;
 
-  @Column("varchar", { name: "name", length: 255 })
+  @Column()
+  @ApiProperty()
   name: string;
 
-  @Column("varchar", { name: "router", nullable: true, length: 255 })
-  router: string | null;
+  @Column({ nullable: true })
+  @ApiProperty()
+  router: string;
 
-  @Column("varchar", { name: "perms", nullable: true, length: 255 })
-  perms: string | null;
+  @Column({ nullable: true })
+  @ApiProperty()
+  perms: string;
 
-  @Column("tinyint", {
-    name: "type",
-    comment: "类型: 0=目录 1=菜单 2=权限",
+  @Column({
+    type: 'tinyint',
     width: 1,
-    default: () => "'0'",
+    default: 0,
+    comment: '类型: 0=目录 1=菜单 2=权限',
   })
-  type: boolean;
+  @ApiProperty()
+  type: number;
 
-  @Column("varchar", { name: "icon", nullable: true, length: 255 })
-  icon: string | null;
+  @Column({ nullable: true })
+  @ApiProperty()
+  icon: string;
 
-  @Column("int", { name: "order_num", nullable: true, default: () => "'0'" })
-  orderNum: number | null;
+  @Column({ name: 'order_num', type: 'int', default: 0, nullable: true })
+  @ApiProperty()
+  orderNum: number;
 
-  @Column("varchar", { name: "view_path", nullable: true, length: 255 })
-  viewPath: string | null;
+  @Column({ name: 'view_path', nullable: true })
+  @ApiProperty()
+  viewPath: string;
 
-  @Column("tinyint", {
-    name: "keepalive",
-    nullable: true,
-    default: () => "'1'",
-  })
-  keepalive: number | null;
+  @Column({ type: 'boolean', nullable: true, default: true })
+  @ApiProperty()
+  keepalive: boolean;
 
-  @Column("tinyint", { name: "is_show", nullable: true, default: () => "'1'" })
-  isShow: number | null;
+  @Column({ name: 'is_show', type: 'boolean', nullable: true, default: true })
+  @ApiProperty()
+  isShow: boolean;
 
-  @Column("tinyint", { name: "is_ext", nullable: true, default: () => "'0'" })
-  isExt: number | null;
+  @Column({ name: 'is_ext', type: 'boolean', nullable: true, default: false })
+  @ApiProperty()
+  isExt: boolean;
 
-  @Column("tinyint", {
-    name: "open_mode",
-    nullable: true,
-    default: () => "'1'",
-  })
-  openMode: number | null;
+  @Column({ name: 'open_mode', type: 'tinyint', nullable: true, default: 1 })
+  @ApiProperty()
+  openMode: number;
 }
