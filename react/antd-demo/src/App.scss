@@ -17,3 +17,26 @@
 ::-webkit-scrollbar-thumb:hover {
   background-color: #c7c9cc;
 }
+
+.logo {
+  color: #fff;
+  font-size: 18px;
+  text-align: center;
+  height: 48px;
+  line-height: 48px;
+  font-weight: bold;
+}
+
+.ant-menu-light .ant-menu-submenu-selected > .ant-menu-submenu-title {
+  color: #fff;
+}
+
+.ant-menu-light.ant-menu-inline .ant-menu-sub.ant-menu-inline {
+  background-color: rgb(11, 56, 235);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+    'Noto Color Emoji';
+}

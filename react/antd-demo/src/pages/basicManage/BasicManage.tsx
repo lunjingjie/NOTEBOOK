@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { ListParams } from '../../types/list/list';
-import { CardWrap } from '../../components/styles/CardWrap';
-import { Button, Input, Space, Table, Tooltip } from 'antd';
+import { Button, Input, Space, Table, Tooltip, Card } from 'antd';
 import { SearchOutlined, PlusOutlined } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
 import { DataType } from './dataType';
 import { getBasinListApi } from '../../api/basin/basin';
 import { useSelector, useDispatch } from 'react-redux';
 import { decrement, increment, increamentByAmount } from './counterSlice';
-import { ModelWrap } from '../../components/antd';
+import { ModelWrap, WrapCard } from '../../components/antd';
 import { Icon } from '../../components/common';
 
 const BasicManage: React.FC = () => {
@@ -23,8 +22,9 @@ const BasicManage: React.FC = () => {
   });
 
   const getBasinList = async (param: any) => {
-    const { data } = await getBasinListApi(param);
-    setDataSource(data.data.records);
+    // const { data } = await getBasinListApi(param);
+    // console.log(data);
+    // setDataSource(data.data.records);
   };
 
   useEffect(() => {
@@ -74,14 +74,14 @@ const BasicManage: React.FC = () => {
 
   return (
     <>
-      <CardWrap>
+      <WrapCard>
         <span>{count}</span>
-        <Button onClick={() => dispatch(increment())}>+</Button>
-        <Button onClick={() => dispatch(decrement())}>-</Button>
-        <Button onClick={() => dispatch(increamentByAmount(3))}>any</Button>
+        <Button type='primary' onClick={() => dispatch(increment())}>+</Button>
+        <Button type='primary' onClick={() => dispatch(decrement())}>-</Button>
+        <Button type='primary' onClick={() => dispatch(increamentByAmount(3))}>any</Button>
         <Icon icon="material-symbols:5g-rounded"></Icon>
-      </CardWrap>
-      <CardWrap>
+      </WrapCard>
+      <WrapCard>
         <Space>
           <span>流域名称</span>
           <Input
@@ -102,13 +102,13 @@ const BasicManage: React.FC = () => {
             />
           </Tooltip>
           <Tooltip title="新增">
-            <Button type="primary" style={{ backgroundColor: 'green' }} icon={<PlusOutlined />} />
+            <Button type="primary" icon={<PlusOutlined />} />
           </Tooltip>
         </Space>
-      </CardWrap>
-      <CardWrap>
+      </WrapCard>
+      <WrapCard>
         <Table size="small" bordered columns={columns} dataSource={dataSource} rowKey="basinId" />
-      </CardWrap>
+      </WrapCard>
       <ModelWrap
         open={open}
         okFunc={() => setOpen(false)}
