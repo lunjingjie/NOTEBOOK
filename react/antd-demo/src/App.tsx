@@ -74,6 +74,8 @@ const App: React.FC = () => {
               color: '#fff',
             }}
           />
+          <div style={{ color: '#d6d4d4', margin: '0 auto', position: 'fixed', bottom: 20, width: 208, padding: '0 20px' }}>
+            { collapsed ? '柯内特' : 'Copyright©广东柯内特环境科技有限公司版权所有' }</div>
         </Sider>
         <Layout className="site-layout">
           <Header
@@ -83,7 +85,8 @@ const App: React.FC = () => {
               lineHeight: '48px',
               display: 'flex',
               justifyContent: 'space-between',
-              boxShadow: '0 1px 4px rgba(0,21,41,.08)'
+              boxShadow: '0 1px 4px rgba(0,21,41,.08)',
+              backgroundColor: '#fff',
             }}
           >
             <div>
