@@ -1,16 +1,17 @@
 import { Switch } from 'antd';
 import { Icon } from '../Icon';
-import { useThemeSwitch } from '../../../hooks/web';
+import { useDispatch } from 'react-redux';
+import { setTheme } from '../../../store/systemSlice';
 
 export const ThemeSwitch: React.FC = () => {
-	const { setTheme } = useThemeSwitch();
+  const dispatch = useDispatch();
 
 	const changeMode = (checked: boolean) => {
 		if (checked) {
-			setTheme('dark');
+			dispatch(setTheme('dark'));
 			return;
 		}
-		setTheme('light');
+		dispatch(setTheme('light'));
 	};
 
 	return (

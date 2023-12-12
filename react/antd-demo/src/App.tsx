@@ -6,11 +6,13 @@ import { router, routerList } from './util/router';
 import './App.scss';
 import CBreadcrumb from './components/antd/Breadcrumb';
 import { ThemeSwitch } from './components/common';
-import { useThemeSwitch } from './hooks/web';
+import { useSelector } from 'react-redux';
 const { Header, Sider, Content } = Layout;
 
 const App: React.FC = () => {
 	const [collapsed, setCollapsed] = useState(false);
+
+  const systemTheme = useSelector((state: any) => state.system.theme);
 	const menuItems = routerList.map((item) => ({
 		key: item.path,
 		label: item.name,
@@ -23,8 +25,6 @@ const App: React.FC = () => {
 			}
 		]
 	}));
-
-  const { theme: systemTheme } = useThemeSwitch();
 
 	// side和menu背景颜色
 	const sideBackgroundColor = 'rgb(47, 84, 235)';
@@ -43,10 +43,6 @@ const App: React.FC = () => {
 		//   host.webkitRequestFullScreen();
 		// }
 	}, []);
-
-  useEffect(() => {
-    console.log(systemTheme);
-  }, [systemTheme]);
 
 	return (
 		<ConfigProvider
