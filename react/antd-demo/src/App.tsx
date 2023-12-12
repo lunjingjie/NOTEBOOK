@@ -12,7 +12,7 @@ const { Header, Sider, Content } = Layout;
 const App: React.FC = () => {
 	const [collapsed, setCollapsed] = useState(false);
 
-  const systemTheme = useSelector((state: any) => state.system.theme);
+	const systemTheme = useSelector((state: any) => state.system.theme);
 	const menuItems = routerList.map((item) => ({
 		key: item.path,
 		label: item.name,
@@ -28,6 +28,7 @@ const App: React.FC = () => {
 
 	// side和menu背景颜色
 	const sideBackgroundColor = 'rgb(47, 84, 235)';
+	const sideBackgroundColorDark = '#141414';
 
 	const clickMenu = (e: any) => {
 		window.location.hash = e.key;
@@ -51,7 +52,7 @@ const App: React.FC = () => {
 				algorithm: systemTheme === 'dark' ? theme.darkAlgorithm : [],
 				token: {
 					colorPrimary: sideBackgroundColor
-				},
+				}
 				// 2. 组合使用暗色算法与紧凑算法
 				// algorithm: [theme.darkAlgorithm, theme.compactAlgorithm],
 			}}
@@ -62,20 +63,23 @@ const App: React.FC = () => {
 					collapsible
 					collapsed={collapsed}
 					style={{
-						backgroundColor: sideBackgroundColor,
+            overflowY: 'auto',
+						backgroundColor:
+							systemTheme === 'dark' ? sideBackgroundColorDark : sideBackgroundColor,
 						width: '208px',
 						boxShadow: '2px 0 8px rgba(29,35,41,.05)'
 					}}
 				>
 					<div className="logo">{collapsed ? 'LOGO' : '柯内特IOT平台'}</div>
 					<Menu
+            theme={systemTheme}
 						defaultSelectedKeys={['/basic1']}
 						items={menuItems}
 						onClick={clickMenu}
 						mode="inline"
 						style={{
-							backgroundColor: sideBackgroundColor,
-							color: '#fff'
+							backgroundColor: systemTheme === 'dark' ? sideBackgroundColorDark : sideBackgroundColor,
+              color: '#fff'
 						}}
 					/>
 					<div
@@ -100,7 +104,7 @@ const App: React.FC = () => {
 							display: 'flex',
 							justifyContent: 'space-between',
 							boxShadow: '0 1px 4px rgba(0,21,41,.08)',
-							backgroundColor: '#fff'
+							backgroundColor: systemTheme === 'dark' ? '#141414' : '#fff'
 						}}
 					>
 						<div>
