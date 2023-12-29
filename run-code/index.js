@@ -181,3 +181,26 @@ function Child() {
 Child.prototype = Object.create(Parent.prototype);
 // 增强对象，弥补因重写原型而失去的默认的constructor 属性
 Child.prototype.constructor = Child;
+
+
+function findPalindromeNumbers3(max) {
+  const res = []
+  if (max <= 0) return res
+
+  for (let i = 1; i <= max; i++) {
+      let n = i
+      let rev = 0 // 存储翻转数
+
+      // 生成翻转数
+      while (n > 0) {
+          rev = rev * 10 + n % 10
+          n = Math.floor(n / 10)
+      }
+
+      if (i === rev) res.push(i)
+  }
+
+  return res
+}
+
+console.log(findPalindromeNumbers3(10000000));

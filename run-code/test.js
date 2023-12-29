@@ -77,3 +77,38 @@ function getArrToMap(arr) {
 
 getLongest(arr) // 输出结果: A-F-G
 console.log(resultMap);
+
+
+const commodity = new Map([
+  ['phone', 1999],
+  ['computer', 9999],
+  ['television', 2999],
+  ['gameBoy', 3999],
+])
+
+const price = (name) => {
+  return commodity.get(name)
+}
+console.log(price('phone')); // 1999
+
+function findPalindromeNumbers3(max) {
+  const res = []
+  if (max <= 0) return res
+
+  for (let i = 1; i <= max; i++) {
+      let n = i
+      let rev = 0 // 存储翻转数
+
+      // 生成翻转数
+      while (n > 0) {
+          rev = rev * 10 + n % 10
+          n = Math.floor(n / 10)
+      }
+
+      if (i === rev) res.push(i)
+  }
+
+  return res
+}
+
+console.log(findPalindromeNumbers3(10000000));
