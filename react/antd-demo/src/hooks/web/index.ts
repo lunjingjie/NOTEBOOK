@@ -1,1 +1,1 @@
-export * from './useThemeSitch';
+export * from './useThemeSwitch';

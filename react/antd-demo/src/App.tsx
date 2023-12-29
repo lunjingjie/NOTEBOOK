@@ -1,136 +1,41 @@
-import React, { useEffect, useState } from 'react';
-import { MenuFoldOutlined, MenuUnfoldOutlined, MailOutlined } from '@ant-design/icons';
-import { Layout, Menu, theme, ConfigProvider } from 'antd';
-import { RouterProvider } from 'react-router-dom';
-import { router, routerList } from './util/router';
+import React, { useEffect } from 'react';
+import { Layout, theme, ConfigProvider } from 'antd';
 import './App.scss';
-import CBreadcrumb from './components/antd/Breadcrumb';
-import { ThemeSwitch } from './components/common';
+import { NavTab } from './components/common';
 import { useSelector } from 'react-redux';
-const { Header, Sider, Content } = Layout;
+import { SysHeader } from './components/common/SysHeader';
+import { SysSider } from './components/common/SysSider';
+import { SysContent } from './components/common/SysContent';
+import { SYSTEM } from './constants';
 
 const App: React.FC = () => {
-	const [collapsed, setCollapsed] = useState(false);
-
   const systemTheme = useSelector((state: any) => state.system.theme);
-	const menuItems = routerList.map((item) => ({
-		key: item.path,
-		label: item.name,
-		icon: <MailOutlined />,
-		children: [
-			{
-				key: item.path,
-				label: item.name,
-				icon: <MailOutlined />
-			}
-		]
-	}));
 
-	// side和menu背景颜色
-	const sideBackgroundColor = 'rgb(47, 84, 235)';
+  // 初始化主题颜色样式
+  useEffect(() => {
+    document.documentElement.setAttribute('theme', 'light');
+  }, []);
 
-	const clickMenu = (e: any) => {
-		window.location.hash = e.key;
-	};
-
-	useEffect(() => {
-		// const host = document.documentElement;
-		// if (host.requestFullscreen) {
-		//   host.requestFullscreen();
-		// } else if (host.mozRequestFullScreen) {
-		//   host.mozRequestFullScreen();
-		// } else if (host.webkitRequestFullScreen) {
-		//   host.webkitRequestFullScreen();
-		// }
-	}, []);
-
-	return (
-		<ConfigProvider
-			theme={{
-				// 1. 单独使用暗色算法
-				algorithm: systemTheme === 'dark' ? theme.darkAlgorithm : [],
-				token: {
-					colorPrimary: sideBackgroundColor
-				},
-				// 2. 组合使用暗色算法与紧凑算法
-				// algorithm: [theme.darkAlgorithm, theme.compactAlgorithm],
-			}}
-		>
-			<Layout style={{ height: '100vh' }}>
-				<Sider
-					trigger={null}
-					collapsible
-					collapsed={collapsed}
-					style={{
-						backgroundColor: sideBackgroundColor,
-						width: '208px',
-						boxShadow: '2px 0 8px rgba(29,35,41,.05)'
-					}}
-				>
-					<div className="logo">{collapsed ? 'LOGO' : '柯内特IOT平台'}</div>
-					<Menu
-						defaultSelectedKeys={['/basic1']}
-						items={menuItems}
-						onClick={clickMenu}
-						mode="inline"
-						style={{
-							backgroundColor: sideBackgroundColor,
-							color: '#fff'
-						}}
-					/>
-					<div
-						style={{
-							color: '#d6d4d4',
-							margin: '0 auto',
-							position: 'fixed',
-							bottom: 20,
-							width: 208,
-							padding: '0 20px'
-						}}
-					>
-						{collapsed ? '柯内特' : 'Copyright©广东柯内特环境科技有限公司版权所有'}
-					</div>
-				</Sider>
-				<Layout className="site-layout">
-					<Header
-						style={{
-							padding: '0 20px 0 0',
-							height: 48,
-							lineHeight: '48px',
-							display: 'flex',
-							justifyContent: 'space-between',
-							boxShadow: '0 1px 4px rgba(0,21,41,.08)',
-							backgroundColor: '#fff'
-						}}
-					>
-						<div>
-							{React.createElement(
-								collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
-								{
-									className: 'trigger',
-									style: { marginLeft: '20px', fontSize: '18px' },
-									onClick: () => setCollapsed(!collapsed)
-								}
-							)}
-							<CBreadcrumb></CBreadcrumb>
-						</div>
-						<div>
-							<ThemeSwitch></ThemeSwitch>
-						</div>
-					</Header>
-					<Content
-						style={{
-							margin: 3,
-							minHeight: 280
-						}}
-						className="layout-content"
-					>
-						<RouterProvider router={router}></RouterProvider>
-					</Content>
-				</Layout>
-			</Layout>
-		</ConfigProvider>
-	);
+  return (
+    <ConfigProvider
+      theme={{
+        // 1. 单独使用暗色算法
+        algorithm: systemTheme === 'dark' ? theme.darkAlgorithm : [],
+        token: {
+          colorPrimary: SYSTEM.primaryColor,
+        },
+      }}
+    >
+      <Layout style={{ height: '100vh' }}>
+        <SysSider />
+        <Layout className="site-layout">
+          <SysHeader />
+          <NavTab />
+          <SysContent />
+        </Layout>
+      </Layout>
+    </ConfigProvider>
+  );
 };
 
 export default App;

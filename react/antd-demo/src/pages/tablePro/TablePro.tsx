@@ -1,8 +1,10 @@
-import { EllipsisOutlined, PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined } from '@ant-design/icons';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
 import { ProTable, TableDropdown } from '@ant-design/pro-components';
-import { Button, Dropdown, Space, Tag } from 'antd';
+import { Button } from 'antd';
 import { useRef } from 'react';
+import { getBasinListApi } from '../../api/basin/basin';
+
 export const waitTimePromise = async (time: number = 100) => {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -15,31 +17,23 @@ export const waitTime = async (time: number = 100) => {
   await waitTimePromise(time);
 };
 
-type GithubIssueItem = {
-  url: string;
-  id: number;
-  number: number;
-  title: string;
-  labels: {
-    name: string;
-    color: string;
-  }[];
-  state: string;
-  comments: number;
-  created_at: string;
-  updated_at: string;
-  closed_at?: string;
+type TableColumnItem = {
+  basinName: string;
+  basinId: string;
+  basinSort: number;
 };
 
-const columns: ProColumns<GithubIssueItem>[] = [
+const columns: ProColumns<TableColumnItem>[] = [
   {
     dataIndex: 'index',
+    key: 'index',
     valueType: 'indexBorder',
     width: 48,
   },
   {
-    title: '标题',
-    dataIndex: 'title',
+    title: '流域名称',
+    dataIndex: 'basinName',
+    key: 'basinName',
     copyable: true,
     ellipsis: true,
     tip: '标题过长会自动收缩',
@@ -54,8 +48,9 @@ const columns: ProColumns<GithubIssueItem>[] = [
   },
   {
     disable: true,
-    title: '状态',
-    dataIndex: 'state',
+    title: '排序',
+    key: 'sort',
+    dataIndex: 'basinSort',
     filters: true,
     onFilter: true,
     ellipsis: true,
@@ -78,24 +73,6 @@ const columns: ProColumns<GithubIssueItem>[] = [
     },
   },
   {
-    disable: true,
-    title: '标签',
-    dataIndex: 'labels',
-    search: false,
-    renderFormItem: (_, { defaultRender }) => {
-      return defaultRender(_);
-    },
-    render: (_, record) => (
-      <Space>
-        {record.labels.map(({ name, color }) => (
-          <Tag color={color} key={name}>
-            {name}
-          </Tag>
-        ))}
-      </Space>
-    ),
-  },
-  {
     title: '创建时间',
     key: 'showTime',
     dataIndex: 'created_at',
@@ -104,43 +81,19 @@ const columns: ProColumns<GithubIssueItem>[] = [
     hideInSearch: true,
   },
   {
-    title: '创建时间',
-    dataIndex: 'created_at',
-    valueType: 'dateRange',
-    hideInTable: true,
-    search: {
-      transform: (value) => {
-        return {
-          startTime: value[0],
-          endTime: value[1],
-        };
-      },
-    },
-  },
-  {
     title: '操作',
     valueType: 'option',
     key: 'option',
     render: (text, record, _, action) => [
       <Button
-        key="editable"
+        key={`edit${record.basinId}`}
         onClick={() => {
-          action?.startEditable?.(record.id);
+          action?.startEditable?.(record.basinId);
         }}
       >
         编辑
       </Button>,
-      <a href={record.url} target="_blank" rel="noopener noreferrer" key="view">
-        查看
-      </a>,
-      <TableDropdown
-        key="actionGroup"
-        onSelect={() => action?.reload()}
-        menus={[
-          { key: 'copy', name: '复制' },
-          { key: 'delete', name: '删除' },
-        ]}
-      />,
+      <Button key={`del${record.basinId}`}>删除</Button>,
     ],
   },
 ];
@@ -148,20 +101,25 @@ const columns: ProColumns<GithubIssueItem>[] = [
 const TablePro = () => {
   const actionRef = useRef<ActionType>();
   return (
-    <ProTable<GithubIssueItem>
+    <ProTable<TableColumnItem>
       style={{ margin: 10 }}
       columns={columns}
       actionRef={actionRef}
       cardBordered
-      // request={async (params, sort, filter) => {
-      //   console.log(sort, filter);
-      //   await waitTime(2000);
-      //   return request.get<{
-      //     data: GithubIssueItem[];
-      //   }>('https://proapi.azurewebsites.net/github/issues', {
-      //     params,
-      //   });
-      // }}
+      request={async (params, sort, filter) => {
+        const { data } = await getBasinListApi({
+          current: 1,
+          pageSize: 10,
+        });
+        return {
+          data: data.data.records,
+          // success 请返回 true，
+          // 不然 table 会停止解析数据，即使有数据
+          success: data.code === 200,
+          // 不传会使用 data 的长度，如果是分页一定要传
+          total: data.data.total,
+        };
+      }}
       editable={{
         type: 'multiple',
       }}
@@ -172,7 +130,7 @@ const TablePro = () => {
           console.log('value: ', value);
         },
       }}
-      rowKey="id"
+      rowKey="basinId"
       search={{
         labelWidth: 'auto',
       }}
@@ -194,11 +152,10 @@ const TablePro = () => {
         },
       }}
       pagination={{
-        pageSize: 5,
-        onChange: (page) => console.log(page),
+        pageSize: 10,
       }}
       dateFormatter="string"
-      headerTitle="高级表格"
+      headerTitle="流域管理"
       toolBarRender={() => [
         <Button
           key="button"

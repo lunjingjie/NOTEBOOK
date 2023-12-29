@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import './icon.scss';
 import { InlineIcon } from '@iconify/react';
+import { SYSTEM } from '../../../constants';
 
 interface IconType {
   icon: string;
@@ -29,7 +30,7 @@ export const Icon: React.FC<IconType> = (props: IconType) => {
   const getWrapStyle = useMemo(
     () => ({
       fontSize: `${size}px`,
-      color,
+      color: color || SYSTEM.primaryColor,
       display: 'inline-flex',
     }),
     [size, color],
